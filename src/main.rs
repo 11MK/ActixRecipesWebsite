@@ -1,4 +1,3 @@
-use actix_files::NamedFile;
 use actix_web::{
     http::{self, Method, StatusCode},
     middleware::{self, ErrorHandlers},
@@ -6,7 +5,8 @@ use actix_web::{
 };
 
 mod api;
-
+mod model;
+mod repository;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
