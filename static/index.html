@@ -33,9 +33,21 @@
         Click Me
       </button>
       <!-- Add more recipe cards here -->
-    </div>
-  </main>
 
+      <div>
+        <h1>Welcome!</h1>
+        <h3>What is your name?</h3>
+        <form id="test-form">
+          <input type="text" name="name" /><br />
+          <button class="mt-4 bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700"
+            hx-include="#test-form" hx-target="#test-form" type="Submit" hx-get="/test" />
+        </form>
+      </div>
+
+    </div>
+
+
+  </main>
   <footer class="bg-blue-500 text-white text-center p-4">
     &copy; 2023 My Recipes
   </footer>

@@ -1,6 +1,8 @@
+use std::collections::HashMap;
+
 use actix_files::NamedFile;
-use actix_web::{Responder, http::header::ContentType, HttpResponse};
-use actix_web::Result;
+use actix_web::{ HttpResponse, Responder};
+use actix_web::{web, Result};
 
 /// favicon handler
 pub async fn favicon() -> Result<impl Responder> {
@@ -10,6 +12,23 @@ pub async fn favicon() -> Result<impl Responder> {
 /// Index Page
 pub async fn index() -> Result<impl Responder> {
     Ok(NamedFile::open("./static/index.html")?)
+}
+
+/// Test Templates & Htmx
+pub async fn test(
+    tmpl: web::Data<tera::Tera>,
+    query: web::Query<HashMap<String, String>>,
+) -> Result<HttpResponse> {
+    if query.get("name").is_none() {
+        let body = tmpl.render("default.html", &tera::Context::new()).unwrap();
+        Ok(HttpResponse::Ok().body(body))
+    } else {
+        let mut ctx = tera::Context::new();
+        ctx.insert("name", query.get("name").unwrap());
+        ctx.insert("text", "Welcome!");
+        let body = tmpl.render("test.html", &ctx).unwrap();
+        Ok(HttpResponse::Ok().body(body))
+    }
 }
 
 /// Button Clicked
